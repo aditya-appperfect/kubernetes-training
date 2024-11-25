@@ -24,7 +24,6 @@ app.get("/api/time", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM time_data");
     const data = result.rows[0];
-    console.log(result, data)
 
     const currentTime = moment().format("YYYY-MM-DD HH:mm:ss");
 
