@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: server-time-app
+spec:
+  selector:
+    app: server-time-app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      # nodePort: 31662
+      # name: server-time-app
+  type: LoadBalancer

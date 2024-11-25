@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-time-app
+  labels:
+    app: client-time-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client-time-app
+  template:
+    metadata:
+      labels:
+        app: client-time-app
+    spec:
+      containers:
+        - name: client-time-app
+          image: adityaappperfect/21-time-app-client:latest
+          ports:
+            - containerPort: 3000

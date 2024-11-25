@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server-time-app
+  labels:
+    app: server-time-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: server-time-app
+  template:
+    metadata:
+      labels:
+        app: server-time-app
+    spec:
+      containers:
+        - name: server-time-app
+          image: adityaappperfect/21-time-app-server:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_HOST
+              value: "postgres"
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_USER
+              value: "postgres"
+            - name: DB_PASSWORD
+              value: "App4ever#"
+            - name: DB_NAME
+              value: "devopstestdb"
