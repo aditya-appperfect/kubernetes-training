@@ -4,7 +4,7 @@ import './App.css';
 function App() {
   const [currentTime, setCurrentTime] = useState('');
   const [callCount, setCallCount] = useState(0);
-  const server = "http://localhost:8080";
+  const server = "https://adityaappperfect.training/server";
 
   useEffect(() => {
     const fetchData = async () => {

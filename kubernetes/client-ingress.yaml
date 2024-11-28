@@ -1,0 +1,31 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    # kubernetes.io/ingress.class: nginx
+  name: client-ingress
+spec:
+  tls:
+  - hosts:
+    - adityaappperfect.training
+    secretName: secret-timeapp-tls
+  # ingressClassName: nginx
+  rules:
+  - host: adityaappperfect.training
+    http:
+      paths:
+      - path: /client(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: client-time-app
+            port:
+              number: 3000
+      - path: /server(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: server-time-app
+            port:
+              number: 8080
