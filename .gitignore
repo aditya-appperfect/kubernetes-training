@@ -8,6 +8,9 @@
 **/*.key
 *secret*
 *notes*
+**/.terraform
+**/.terraform.lock.hcl
+**/terraform.tfstate*
 
 # testing
 /coverage
