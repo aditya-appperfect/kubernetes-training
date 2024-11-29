@@ -17,27 +17,18 @@ resource "kubernetes_ingress_v1" "client_ingress" {
       host = "adityaappperfect.training"
 
       http {
-        path {
-          path = "/client(/|$)(.*)"
-          path_type = "ImplementationSpecific"
-          backend {
-            service {
-              name = "client-time-app"
-              port {
-                number = 3000
-              }
-            }
-          }
-        }
+        dynamic "path" {
+          for_each = local.paths
 
-        path {
-          path = "/server(/|$)(.*)"
-          path_type = "ImplementationSpecific"
-          backend {
-            service {
-              name = "server-time-app"
-              port {
-                number = 8080
+          content {
+            path = path.value.path
+            path_type = "ImplementationSpecific"
+            backend {
+              service {
+                name = path.value.name
+                port {
+                  number = path.value.port
+                }
               }
             }
           }
