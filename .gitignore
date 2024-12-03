@@ -11,10 +11,10 @@
 **/.terraform
 **/.terraform.lock.hcl
 **/terraform.tfstate*
-
+myenv
 # testing
 /coverage
-
+**/local_only
 # production
 /build
 
