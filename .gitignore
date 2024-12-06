@@ -17,6 +17,8 @@ myenv
 **/local_only
 # production
 /build
+get-pip.py
+
 
 # misc
 .DS_Store

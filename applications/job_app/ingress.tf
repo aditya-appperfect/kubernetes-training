@@ -3,6 +3,7 @@ resource "kubernetes_ingress_v1" "ingress_application" {
     name = "ingress-application"
     annotations = {
       "kubernetes.io/ingress.class" = "nginx"
+      "nginx.ingress.kubernetes.io/rewrite-target": "/$1"
     }
   }
 
@@ -17,22 +18,8 @@ resource "kubernetes_ingress_v1" "ingress_application" {
 
       http {
         path {
-          path      = "/"
-          path_type = "Exact"
-
-          backend {
-            service {
-              name = "nginx-flask-service"
-              port {
-                number = 80
-              }
-            }
-          }
-        }
-
-        path {
-          path      = "/job"
-          path_type = "Exact"
+          path      = "/(.*)"
+          path_type = "ImplementationSpecific"
 
           backend {
             service {

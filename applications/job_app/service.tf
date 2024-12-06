@@ -23,3 +23,22 @@ resource "kubernetes_service" "nginx_flask_service" {
     }
   }
 }
+
+resource "kubernetes_service" "keycloak_service" {
+  metadata {
+    name = "keycloak-service"
+  }
+
+  spec {
+    selector = {
+      app = "keycloak"
+    }
+
+    port {
+      name       = "keycloak-port"
+      protocol   = "TCP"
+      port       = 8080
+      target_port = 8080
+    }
+  }
+}
