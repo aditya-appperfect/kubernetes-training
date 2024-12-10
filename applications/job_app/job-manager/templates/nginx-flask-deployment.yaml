@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-flask
+  namespace: default
+spec:
+  replicas: {{ .Values.nginxFlask.replicaCount }}
+  selector:
+    matchLabels:
+      app: nginx-flask
+  template:
+    metadata:
+      labels:
+        app: nginx-flask
+    spec:
+      containers:
+        - name: nginx
+          image: "{{ .Values.nginxFlask.image.repository }}:{{ .Values.nginxFlask.image.tag }}"
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: nginx-config-volume
+              mountPath: /etc/nginx/conf.d/nginx.conf
+              subPath: nginx.conf
+            - name: secret-tls
+              mountPath: /etc/ssl/certs/tls.crt
+              subPath: tls.crt
+            - name: secret-tls
+              mountPath: /etc/ssl/certs/tls.key
+              subPath: tls.key
+        - name: flask
+          image: "{{ .Values.flask.image.repository }}:{{ .Values.flask.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.flask.containerPort }}
+      volumes:
+        - name: nginx-config-volume
+          secret:
+            secretName: {{ .Values.nginxFlask.nginxConfigSecret }}
+        - name: secret-tls
+          secret:
+            secretName: {{ .Values.nginxFlask.tlsSecret }}

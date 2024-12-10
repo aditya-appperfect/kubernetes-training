@@ -1,0 +1,64 @@
+nginxFlask:
+  replicaCount: 1
+  image:
+    repository: nginx
+    tag: latest
+  nginxConfigSecret: nginx-config-secret
+  tlsSecret: secret-tls
+
+flask:
+  image:
+    repository: adityaappperfect/job-creation-app
+    tag: latest
+  containerPort: 5000
+
+keycloak:
+  replicaCount: 1
+  image:
+    repository: quay.io/keycloak/keycloak
+    tag: latest
+  keycloakAdminUsername: admin
+  keycloakAdminPassword: admin
+  tlsSecret: secret-tls
+  containerPort: 8080
+
+clusterRole:
+  name: job-reader
+  rules:
+    - apiGroups: [""]
+      resources: ["pods", "namespaces"]
+      verbs: ["list", "get", "create", "delete"]
+    - apiGroups: ["batch"]
+      resources: ["jobs"]
+      verbs: ["list", "create", "delete"]
+
+clusterRoleBinding:
+  name: job-reader-binding
+  serviceAccount:
+    name: default
+    namespace: default
+  roleRef:
+    kind: ClusterRole
+    name: job-reader
+    apiGroup: rbac.authorization.k8s.io
+
+ingress:
+  enabled: true
+  host: "adityaappperfect.training"
+  tlsSecret: "secret-tls"
+  nginxIngressClass: "nginx"
+  rewriteTarget: "/$1"
+  serviceName: "nginx-flask-service"
+  servicePort: 80
+
+secrets:
+  nginxConfigSecret:
+    name: "nginx-config-secret"
+    filePath: "nginx.conf"
+  tlsSecret:
+    name: "secret-tls"
+    certFilePath: "server.crt"
+    keyFilePath: "server.key"
+  caTlsSecret:
+    name: "ca-tls"
+    certFilePath: "rootCA.crt"

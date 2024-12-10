@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak
+  namespace: default
+spec:
+  replicas: {{ .Values.keycloak.replicaCount }}
+  selector:
+    matchLabels:
+      app: keycloak
+  template:
+    metadata:
+      labels:
+        app: keycloak
+    spec:
+      containers:
+        - name: keycloak
+          image: "{{ .Values.keycloak.image.repository }}:{{ .Values.keycloak.image.tag }}"
+          args:
+            - start-dev
+          env:
+            - name: KC_BOOTSTRAP_ADMIN_USERNAME
+              value: "{{ .Values.keycloak.keycloakAdminUsername }}"
+            - name: KC_BOOTSTRAP_ADMIN_PASSWORD
+              value: "{{ .Values.keycloak.keycloakAdminPassword }}"
+            - name: PROXY_ADDRESS_FORWARD
+              value: "true"
+            - name: KC_HTTP_ENABLED
+              value: "false"
+            - name: KC_HTTPS_CERTIFICATE_FILE
+              value: /tls.crt
+            - name: KC_HTTPS_CERTIFICATE_KEY_FILE
+              value: /tls.key
+          ports:
+            - containerPort: {{ .Values.keycloak.containerPort }}
+          volumeMounts:
+            - name: secret-tls
+              mountPath: /tls.crt
+              subPath: tls.crt
+            - name: secret-tls
+              mountPath: /tls.key
+              subPath: tls.key
+      volumes:
+        - name: secret-tls
+          secret:
+            secretName: {{ .Values.keycloak.tlsSecret }}
