@@ -1,0 +1,51 @@
+{
+    "realm": "my-realm1",
+    "enabled": true,
+    "clients": [
+      {
+        "clientId": "flask-client",
+        "name": "flask-client",
+        "enabled": true,
+        "redirectUris": [
+          "https://adityaappperfect.training/api/callback/*",
+          "http://adityaappperfect.training/api/callback/*"
+        ],
+        "homeUr": [
+          "https://adityaappperfect.training/api/callback/*",
+          "http://adityaappperfect.training/api/callback/*"
+        ],
+        "baseUrl": "https://adityaappperfect.training/",
+        "webOrigins": [
+          "*"
+        ],
+        "publicClient": true,
+        "protocol": "openid-connect"
+      }
+    ],
+    "users": [
+      {
+        "username": "aditya",
+        "enabled": true,
+        "firstName": "aditya",
+        "lastName": "aditya",
+        "email": "aditya@appperfect.com",
+        "credentials": [
+          {
+            "type": "password",
+            "value": "aditya"
+          }
+        ]
+      }
+    ],
+    "keys": [],
+    "realmRoles": [
+      {
+        "name": "user",
+        "description": "User Role"
+      }
+    ],
+    "groups": [],
+    "authenticationFlows": [],
+    "eventsListeners": []
+  }
+  

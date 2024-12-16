@@ -31,6 +31,10 @@ spec:
               value: /tls.crt
             - name: KC_HTTPS_CERTIFICATE_KEY_FILE
               value: /tls.key
+            - name: KC_HOSTNAME_URL
+              value: "https://adityaappperfect.training"
+            - name: KC_HOSTNAME_ADMIN_URL
+              value: "https://adityaappperfect.training"
           ports:
             - containerPort: {{ .Values.keycloak.containerPort }}
           volumeMounts:

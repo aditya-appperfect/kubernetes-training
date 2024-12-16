@@ -14,7 +14,7 @@ config.load_incluster_config()
 app.secret_key = secrets.token_hex(16)
 
 app.config['KEYCLOAK_CLIENT_ID'] = 'flask-client'
-app.config['KEYCLOAK_CLIENT_SECRET'] = 'kMwJ1LHwqdewo0qOInuAu8H6ThPFcwhd'
+app.config['KEYCLOAK_CLIENT_SECRET'] = 'GJw9EkIsJSmKUDN7OdQRi6rNMvcosIpa'
 app.config['KEYCLOAK_BASE_URL'] = 'https://adityaappperfect.training/realms/my-realm/protocol/openid-connect'
 
 oauth = OAuth(app)
